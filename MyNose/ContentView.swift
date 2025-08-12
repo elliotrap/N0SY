@@ -21,7 +21,7 @@ struct ContentView: View {
 
     @ObservedObject var viewModel = FragranceViewModel.shared
 
-    @State private var nameFragranceScreen = true
+    @State private var nameFragranceScreen = false
     
     @State private var nameOfFragrance = ""
 
@@ -832,6 +832,19 @@ struct TopNoteStruct: View {
     @State private var topNotesMinimize: Bool = false
     @State private var topNoteHints: Bool = false
 
+    @State private var showTopDropsPicker = false
+    @State private var pendingTopOil: String? = nil
+    @State private var selectedTopDrops: Int = 1
+    
+    private func quickAddTop(_ oil: String, drops: String = "1") {
+        variables.topNoteOilName = oil
+        variables.topNoteDrops = drops
+        withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0.1)) {
+            viewModel.addTopNoteEntry()
+        }
+    }
+
+
     let essentialOilNames = [
         "Basil", "Balm Mint Bush", "Bergamot", "Eucalyptus Dives", "Eucalyptus Globulus",
         "Eucalyptus Radiata", "Fennel", "Fragonia", "Grapefruit", "Kumquat", "Kunzea",
@@ -882,7 +895,33 @@ struct TopNoteStruct: View {
                 }
             }
             .padding(.leading, 2.5)
-            
+            .sheet(isPresented: $showTopDropsPicker) {
+                VStack(spacing: 16) {
+                    Text("How many drops to add?")
+                        .font(.custom("BeVietnamPro-Medium", size: 20))
+                    if let oil = pendingTopOil {
+                        Text(oil)
+                            .font(.custom("BeVietnamPro-Bold", size: 18))
+                    }
+                    Stepper(value: $selectedTopDrops, in: 1...200) {
+                        Text("Drops: \(selectedTopDrops)")
+                            .font(.custom("BeVietnamPro-Light", size: 17))
+                    }
+                    HStack(spacing: 14) {
+                        Button("Cancel") { showTopDropsPicker = false }
+                            .buttonStyle(.borderless)
+                        Button("Add") {
+                            if let oil = pendingTopOil {
+                                quickAddTop(oil, drops: String(selectedTopDrops))
+                            }
+                            showTopDropsPicker = false
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                    .padding(.top, 6)
+                }
+                .padding()
+            }
             
             if topNoteHints {
                 ZStack {
@@ -890,24 +929,41 @@ struct TopNoteStruct: View {
                     HStack {
                         ScrollView {
                             ForEach(essentialOilNames, id: \.self) { oil in
-                                
                                 HStack(spacing: 0) {
                                     Rectangle()
                                         .fill(Color(.black))
                                         .opacity(0.5)
                                         .frame(width: 10, height: 50)
-                                    
                                     ZStack {
                                         Rectangle()
                                             .fill(Color("softGray"))
                                             .frame(width: 250, height: 50)
                                             .clipShape(TrailingRoundedRectangle(radius: 10))
                                             .overlay(
-                                                Text(oil)
-                                                    .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                HStack {
+                                                    Text(oil)
+                                                        .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                    Spacer()
+                                                    Button(action: {
+                                                        pendingTopOil = oil
+                                                        selectedTopDrops = 1
+                                                        showTopDropsPicker = true
+                                                    }) {
+                                                        HStack(spacing: 4) {
+                                                            Image(systemName: "plus.circle.fill").font(.system(size: 14))
+                                                            Text("Add").font(.custom("BeVietnamPro-Light", size: 13))
+                                                        }
+                                                        .frame(height: 28)
+                                                        .padding(.horizontal, 8)
+                                                        .background(Color("softBlue"))
+                                                        .foregroundColor(.black)
+                                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                    }
+                                                    .buttonStyle(.plain)
+                                                    .padding(.trailing, 8)
+
+                                                }
                                             )
-                                        
-                                        
                                     }
                                 }
                                 .cornerRadius(10)
@@ -965,30 +1021,20 @@ struct TopNoteStruct: View {
                         Text("Top Notes")
                             .font(.custom("BeVietnamPro-Medium", size: 35))
                         ZStack {
-                            
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 21, height: 21)
-                            
                             Button(action: {
                                 withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
                                     topNoteHints = true
                                     topNoteContainerHeight = 360
                                     topNoteOutsideContainerHeight = 365
-                                    
                                     topNoteBackgroundContainerHeight = 360
                                     topNoteBackgroundOutsideContainerHeight = 365
-                                    
-                                    
                                 }
                             }, label: {
-                                Image(systemName: "questionmark.app.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(Color(.gray))
-                            
-                                
+                        
                             })
                             .buttonStyle(.plain)
-                
                         }
                      
                     }
@@ -1013,36 +1059,61 @@ struct TopNoteStruct: View {
                                     .font(.custom("BeVietnamPro-Light", size: 15))
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                     .frame(width: 100)
+                                    .keyboardType(.numberPad)
                             }
                         }
-                        
-                        // Button to add the entry to the list
+                    
+                    
+          
+                    HStack(spacing: 12) {
+                        // Add via text fields (was the info button’s “job” conceptually)
                         Button(action: {
                             withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0.1)) {
                                 viewModel.addTopNoteEntry()
                             }
-                            
                         }) {
-                            
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.black)
-                                    .frame(width: 125, height: 60)
+                                    .frame(width: 115, height: 56)
                                     .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
-                                
-                                
                                 Text("Add Aroma")
                                     .underline(false)
-                                    .font(.custom("BeVietnamPro-Light", size: 17))
-                                    .frame(width: 120, height: 56)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 110, height: 52)
                                     .background(Color("softBlue"))
                                     .foregroundColor(.black)
                                     .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
-                                
-                                
                             }
                         }
                         .buttonStyle(.borderless)
+
+                        // Open the hints list (this used to be your big Add button)
+                        Button(action: {
+                            withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
+                                topNoteHints = true
+                                topNoteContainerHeight = 360
+                                topNoteOutsideContainerHeight = 365
+                                topNoteBackgroundContainerHeight = 360
+                                topNoteBackgroundOutsideContainerHeight = 365
+                            }
+                        }) {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.black)
+                                    .frame(width: 115, height: 56)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+                                Text("Hints")
+                                    .underline(false)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 110, height: 52)
+                                    .background(Color("softBlue"))
+                                    .foregroundColor(.black)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                            }
+                        }
+                        .buttonStyle(.borderless)
+                    }
                         
                         Spacer()
                         .frame(height: 10)
@@ -1185,6 +1256,7 @@ struct TopNoteStruct: View {
                         
                  
                 }
+                
 
             } else if topNotesMinimize {
                 VStack(spacing: 0) {
@@ -1214,6 +1286,7 @@ struct TopNoteStruct: View {
                     Spacer()
                         .frame(height: 15)
                 }
+                
             }
             }
                 .environment(\.sizeCategory, .small)
@@ -1238,6 +1311,14 @@ struct MiddleNoteStruct: View {
 
     @State private var middleNotesMinimize: Bool = false
     @State private var middleNoteHints: Bool = false
+
+    private func quickAddMiddle(_ oil: String, drops: String = "1") {
+        variables.middleNoteOilName = oil
+        variables.middleNoteDrops = drops
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.1)) {
+            viewModel.addMiddleNoteEntry()
+        }
+    }
 //    @State private var essentialOils: [EssentialOil] = [
 ////        EssentialOil(name: "Basil", drops: 10),
 ////           EssentialOil(name: "Balm Mint Bush", drops: 15),
@@ -1346,24 +1427,38 @@ struct MiddleNoteStruct: View {
                     HStack {
                         ScrollView {
                             ForEach(essentialOilNames, id: \.self) { oil in
-                                
                                 HStack(spacing: 0) {
                                     Rectangle()
                                         .fill(Color(.black))
                                         .opacity(0.5)
                                         .frame(width: 10, height: 50)
-                                    
                                     ZStack {
                                         Rectangle()
                                             .fill(Color("softGray"))
                                             .frame(width: 250, height: 50)
                                             .clipShape(TrailingRoundedRectangle(radius: 10))
                                             .overlay(
-                                                Text(oil)
-                                                    .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                HStack {
+                                                    Text(oil)
+                                                        .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                    Spacer()
+                                                    Button(action: { quickAddMiddle(oil) }) {
+                                                        HStack(spacing: 4) {
+                                                            Image(systemName: "plus.circle.fill")
+                                                                .font(.system(size: 14))
+                                                            Text("Add")
+                                                                .font(.custom("BeVietnamPro-Light", size: 13))
+                                                        }
+                                                        .frame(height: 28)
+                                                        .padding(.horizontal, 8)
+                                                        .background(Color("softBlue"))
+                                                        .foregroundColor(.black)
+                                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                    }
+                                                    .buttonStyle(.plain)
+                                                    .padding(.trailing, 8)
+                                                }
                                             )
-                                        
-                                        
                                     }
                                 }
                                 .cornerRadius(10)
@@ -1421,30 +1516,21 @@ struct MiddleNoteStruct: View {
                         Text("Middle Notes")
                             .font(.custom("BeVietnamPro-Medium", size: 35))
                         ZStack {
-                            
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 21, height: 21)
-                            
                             Button(action: {
                                 withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
                                     middleNoteHints = true
                                     middleNoteContainerHeight = 360
                                     middleNoteOutsideContainerHeight = 365
-                                    
                                     middleNoteBackgroundContainerHeight = 360
                                     middleNoteBackgroundOutsideContainerHeight = 365
-                                    
-                                    
                                 }
                             }, label: {
-                                Image(systemName: "questionmark.app.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(Color(.gray))
-                            
-                                
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 22))
                             })
                             .buttonStyle(.plain)
-                
                         }
                      
                     }
@@ -1469,6 +1555,7 @@ struct MiddleNoteStruct: View {
                                     .font(.custom("BeVietnamPro-Light", size: 15))
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                     .frame(width: 100)
+                                    .keyboardType(.numberPad)
                             }
                         }
                         
@@ -1581,16 +1668,12 @@ struct MiddleNoteStruct: View {
                                     .frame(width: 5, height: 20)
                                     .clipShape(LeadingRoundedRectangle(radius: 10))
                                 ZStack {
-                                    
-                                    // Display total top drops
                                     Rectangle()
                                         .foregroundColor(Color("softGray"))
                                         .frame(width: 190, height: 20)
                                         .clipShape(TrailingRoundedRectangle(radius: 5))
-                                    
-                                    Text("Total Top Drops: \(variables.totalDropsMiddleNote)")
+                                    Text("Total Middle Drops: \(variables.totalDropsMiddleNote)")
                                         .font(.custom("BeVietnamPro-Light", size: 15))
-                                    
                                 }
                             }
                             
@@ -1692,6 +1775,14 @@ struct BaseNoteStruct: View {
     @State private var baseNotesMinimize: Bool = false
     @State private var baseNoteHints: Bool = false
 
+    private func quickAddBase(_ oil: String, drops: String = "1") {
+        variables.baseNoteOilName = oil
+        variables.baseNoteDrops = drops
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.1)) {
+            viewModel.addBaseNoteEntry()
+        }
+    }
+
 
     
     let essentialOilNames = [
@@ -1765,24 +1856,38 @@ struct BaseNoteStruct: View {
                     HStack {
                         ScrollView {
                             ForEach(essentialOilNames, id: \.self) { oil in
-                                
                                 HStack(spacing: 0) {
                                     Rectangle()
                                         .fill(Color(.black))
                                         .opacity(0.5)
                                         .frame(width: 10, height: 50)
-                                    
                                     ZStack {
                                         Rectangle()
                                             .fill(Color("softGray"))
                                             .frame(width: 250, height: 50)
                                             .clipShape(TrailingRoundedRectangle(radius: 10))
                                             .overlay(
-                                                Text(oil)
-                                                    .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                HStack {
+                                                    Text(oil)
+                                                        .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                    Spacer()
+                                                    Button(action: { quickAddBase(oil) }) {
+                                                        HStack(spacing: 4) {
+                                                            Image(systemName: "plus.circle.fill")
+                                                                .font(.system(size: 14))
+                                                            Text("Add")
+                                                                .font(.custom("BeVietnamPro-Light", size: 13))
+                                                        }
+                                                        .frame(height: 28)
+                                                        .padding(.horizontal, 8)
+                                                        .background(Color("softBlue"))
+                                                        .foregroundColor(.black)
+                                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                    }
+                                                    .buttonStyle(.plain)
+                                                    .padding(.trailing, 8)
+                                                }
                                             )
-                                        
-                                        
                                     }
                                 }
                                 .cornerRadius(10)
@@ -1840,30 +1945,21 @@ struct BaseNoteStruct: View {
                         Text("Base Notes")
                             .font(.custom("BeVietnamPro-Medium", size: 35))
                         ZStack {
-                            
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 21, height: 21)
-                            
                             Button(action: {
                                 withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
                                     baseNoteHints = true
                                     baseNoteContainerHeight = 360
                                     baseNoteOutsideContainerHeight = 365
-                                    
                                     baseNoteBackgroundContainerHeight = 360
                                     baseNoteBackgroundOutsideContainerHeight = 365
-                                    
-                                    
                                 }
                             }, label: {
-                                Image(systemName: "questionmark.app.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(Color(.gray))
-                            
-                                
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 22))
                             })
                             .buttonStyle(.plain)
-                
                         }
                      
                     }
@@ -1888,6 +1984,7 @@ struct BaseNoteStruct: View {
                                     .font(.custom("BeVietnamPro-Light", size: 15))
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                     .frame(width: 100)
+                                    .keyboardType(.numberPad)
                             }
                         }
                         
