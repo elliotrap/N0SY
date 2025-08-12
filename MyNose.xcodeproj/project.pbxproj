@@ -1,0 +1,707 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2111C0082C51C9AA00005836 /* MyNoseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0072C51C9AA00005836 /* MyNoseApp.swift */; };
+		2111C00A2C51C9AA00005836 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0092C51C9AA00005836 /* ContentView.swift */; };
+		2111C00C2C51C9AC00005836 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2111C00B2C51C9AC00005836 /* Assets.xcassets */; };
+		2111C00F2C51C9AC00005836 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2111C00E2C51C9AC00005836 /* Preview Assets.xcassets */; };
+		2111C0192C51C9AC00005836 /* MyNoseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0182C51C9AC00005836 /* MyNoseTests.swift */; };
+		2111C0232C51C9AC00005836 /* MyNoseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0222C51C9AC00005836 /* MyNoseUITests.swift */; };
+		2111C0252C51C9AC00005836 /* MyNoseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0242C51C9AC00005836 /* MyNoseUITestsLaunchTests.swift */; };
+		2111C0322C520DC300005836 /* CrossAppVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0312C520DC300005836 /* CrossAppVariables.swift */; };
+		2111C05E2C54CF3E00005836 /* BeVietnamPro-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C04A2C54CF3E00005836 /* BeVietnamPro-Black.ttf */; };
+		2111C05F2C54CF3E00005836 /* BeVietnamPro-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C04B2C54CF3E00005836 /* BeVietnamPro-BlackItalic.ttf */; };
+		2111C0602C54CF3E00005836 /* BeVietnamPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C04C2C54CF3E00005836 /* BeVietnamPro-Bold.ttf */; };
+		2111C0612C54CF3E00005836 /* BeVietnamPro-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C04D2C54CF3E00005836 /* BeVietnamPro-BoldItalic.ttf */; };
+		2111C0622C54CF3E00005836 /* BeVietnamPro-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C04E2C54CF3E00005836 /* BeVietnamPro-ExtraBold.ttf */; };
+		2111C0632C54CF3E00005836 /* BeVietnamPro-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C04F2C54CF3E00005836 /* BeVietnamPro-ExtraBoldItalic.ttf */; };
+		2111C0642C54CF3E00005836 /* BeVietnamPro-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0502C54CF3E00005836 /* BeVietnamPro-ExtraLight.ttf */; };
+		2111C0652C54CF3E00005836 /* BeVietnamPro-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0512C54CF3E00005836 /* BeVietnamPro-ExtraLightItalic.ttf */; };
+		2111C0662C54CF3E00005836 /* BeVietnamPro-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0522C54CF3E00005836 /* BeVietnamPro-Italic.ttf */; };
+		2111C0672C54CF3E00005836 /* BeVietnamPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0532C54CF3E00005836 /* BeVietnamPro-Light.ttf */; };
+		2111C0682C54CF3E00005836 /* BeVietnamPro-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0542C54CF3E00005836 /* BeVietnamPro-LightItalic.ttf */; };
+		2111C0692C54CF3E00005836 /* BeVietnamPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0552C54CF3E00005836 /* BeVietnamPro-Medium.ttf */; };
+		2111C06A2C54CF3E00005836 /* BeVietnamPro-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0562C54CF3E00005836 /* BeVietnamPro-MediumItalic.ttf */; };
+		2111C06B2C54CF3E00005836 /* BeVietnamPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0572C54CF3E00005836 /* BeVietnamPro-Regular.ttf */; };
+		2111C06C2C54CF3E00005836 /* BeVietnamPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0582C54CF3E00005836 /* BeVietnamPro-SemiBold.ttf */; };
+		2111C06D2C54CF3E00005836 /* BeVietnamPro-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C0592C54CF3E00005836 /* BeVietnamPro-SemiBoldItalic.ttf */; };
+		2111C06E2C54CF3E00005836 /* BeVietnamPro-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C05A2C54CF3E00005836 /* BeVietnamPro-Thin.ttf */; };
+		2111C06F2C54CF3E00005836 /* BeVietnamPro-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111C05B2C54CF3E00005836 /* BeVietnamPro-ThinItalic.ttf */; };
+		2111C0702C54CF3E00005836 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2111C05C2C54CF3E00005836 /* OFL.txt */; };
+		2111C0722C5888D300005836 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0712C5888D300005836 /* ViewModel.swift */; };
+		2111C0742C58C42000005836 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111C0732C58C42000005836 /* SwiftUIView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2111C0152C51C9AC00005836 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2111BFFC2C51C9AA00005836 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2111C0032C51C9AA00005836;
+			remoteInfo = MyNose;
+		};
+		2111C01F2C51C9AC00005836 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2111BFFC2C51C9AA00005836 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2111C0032C51C9AA00005836;
+			remoteInfo = MyNose;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2111C0042C51C9AA00005836 /* MyNose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyNose.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2111C0072C51C9AA00005836 /* MyNoseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoseApp.swift; sourceTree = "<group>"; };
+		2111C0092C51C9AA00005836 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2111C00B2C51C9AC00005836 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2111C00E2C51C9AC00005836 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2111C0142C51C9AC00005836 /* MyNoseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyNoseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2111C0182C51C9AC00005836 /* MyNoseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoseTests.swift; sourceTree = "<group>"; };
+		2111C01E2C51C9AC00005836 /* MyNoseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyNoseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2111C0222C51C9AC00005836 /* MyNoseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoseUITests.swift; sourceTree = "<group>"; };
+		2111C0242C51C9AC00005836 /* MyNoseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoseUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2111C0312C520DC300005836 /* CrossAppVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossAppVariables.swift; sourceTree = "<group>"; };
+		2111C03E2C5342DA00005836 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2111C04A2C54CF3E00005836 /* BeVietnamPro-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Black.ttf"; sourceTree = "<group>"; };
+		2111C04B2C54CF3E00005836 /* BeVietnamPro-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-BlackItalic.ttf"; sourceTree = "<group>"; };
+		2111C04C2C54CF3E00005836 /* BeVietnamPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Bold.ttf"; sourceTree = "<group>"; };
+		2111C04D2C54CF3E00005836 /* BeVietnamPro-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-BoldItalic.ttf"; sourceTree = "<group>"; };
+		2111C04E2C54CF3E00005836 /* BeVietnamPro-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-ExtraBold.ttf"; sourceTree = "<group>"; };
+		2111C04F2C54CF3E00005836 /* BeVietnamPro-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		2111C0502C54CF3E00005836 /* BeVietnamPro-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-ExtraLight.ttf"; sourceTree = "<group>"; };
+		2111C0512C54CF3E00005836 /* BeVietnamPro-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		2111C0522C54CF3E00005836 /* BeVietnamPro-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Italic.ttf"; sourceTree = "<group>"; };
+		2111C0532C54CF3E00005836 /* BeVietnamPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Light.ttf"; sourceTree = "<group>"; };
+		2111C0542C54CF3E00005836 /* BeVietnamPro-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-LightItalic.ttf"; sourceTree = "<group>"; };
+		2111C0552C54CF3E00005836 /* BeVietnamPro-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Medium.ttf"; sourceTree = "<group>"; };
+		2111C0562C54CF3E00005836 /* BeVietnamPro-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-MediumItalic.ttf"; sourceTree = "<group>"; };
+		2111C0572C54CF3E00005836 /* BeVietnamPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Regular.ttf"; sourceTree = "<group>"; };
+		2111C0582C54CF3E00005836 /* BeVietnamPro-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-SemiBold.ttf"; sourceTree = "<group>"; };
+		2111C0592C54CF3E00005836 /* BeVietnamPro-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		2111C05A2C54CF3E00005836 /* BeVietnamPro-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-Thin.ttf"; sourceTree = "<group>"; };
+		2111C05B2C54CF3E00005836 /* BeVietnamPro-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeVietnamPro-ThinItalic.ttf"; sourceTree = "<group>"; };
+		2111C05C2C54CF3E00005836 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		2111C0712C5888D300005836 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		2111C0732C58C42000005836 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2111C0012C51C9AA00005836 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2111C0112C51C9AC00005836 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2111C01B2C51C9AC00005836 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2111BFFB2C51C9AA00005836 = {
+			isa = PBXGroup;
+			children = (
+				2111C0062C51C9AA00005836 /* MyNose */,
+				2111C0172C51C9AC00005836 /* MyNoseTests */,
+				2111C0212C51C9AC00005836 /* MyNoseUITests */,
+				2111C0052C51C9AA00005836 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2111C0052C51C9AA00005836 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2111C0042C51C9AA00005836 /* MyNose.app */,
+				2111C0142C51C9AC00005836 /* MyNoseTests.xctest */,
+				2111C01E2C51C9AC00005836 /* MyNoseUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2111C0062C51C9AA00005836 /* MyNose */ = {
+			isa = PBXGroup;
+			children = (
+				2111C03E2C5342DA00005836 /* Info.plist */,
+				2111C0072C51C9AA00005836 /* MyNoseApp.swift */,
+				2111C0312C520DC300005836 /* CrossAppVariables.swift */,
+				2111C0092C51C9AA00005836 /* ContentView.swift */,
+				2111C0712C5888D300005836 /* ViewModel.swift */,
+				2111C0732C58C42000005836 /* SwiftUIView.swift */,
+				2111C05D2C54CF3E00005836 /* Be_Vietnam_Pro */,
+				2111C00B2C51C9AC00005836 /* Assets.xcassets */,
+				2111C00D2C51C9AC00005836 /* Preview Content */,
+			);
+			path = MyNose;
+			sourceTree = "<group>";
+		};
+		2111C00D2C51C9AC00005836 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2111C00E2C51C9AC00005836 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2111C0172C51C9AC00005836 /* MyNoseTests */ = {
+			isa = PBXGroup;
+			children = (
+				2111C0182C51C9AC00005836 /* MyNoseTests.swift */,
+			);
+			path = MyNoseTests;
+			sourceTree = "<group>";
+		};
+		2111C0212C51C9AC00005836 /* MyNoseUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2111C0222C51C9AC00005836 /* MyNoseUITests.swift */,
+				2111C0242C51C9AC00005836 /* MyNoseUITestsLaunchTests.swift */,
+			);
+			path = MyNoseUITests;
+			sourceTree = "<group>";
+		};
+		2111C05D2C54CF3E00005836 /* Be_Vietnam_Pro */ = {
+			isa = PBXGroup;
+			children = (
+				2111C04A2C54CF3E00005836 /* BeVietnamPro-Black.ttf */,
+				2111C04B2C54CF3E00005836 /* BeVietnamPro-BlackItalic.ttf */,
+				2111C04C2C54CF3E00005836 /* BeVietnamPro-Bold.ttf */,
+				2111C04D2C54CF3E00005836 /* BeVietnamPro-BoldItalic.ttf */,
+				2111C04E2C54CF3E00005836 /* BeVietnamPro-ExtraBold.ttf */,
+				2111C04F2C54CF3E00005836 /* BeVietnamPro-ExtraBoldItalic.ttf */,
+				2111C0502C54CF3E00005836 /* BeVietnamPro-ExtraLight.ttf */,
+				2111C0512C54CF3E00005836 /* BeVietnamPro-ExtraLightItalic.ttf */,
+				2111C0522C54CF3E00005836 /* BeVietnamPro-Italic.ttf */,
+				2111C0532C54CF3E00005836 /* BeVietnamPro-Light.ttf */,
+				2111C0542C54CF3E00005836 /* BeVietnamPro-LightItalic.ttf */,
+				2111C0552C54CF3E00005836 /* BeVietnamPro-Medium.ttf */,
+				2111C0562C54CF3E00005836 /* BeVietnamPro-MediumItalic.ttf */,
+				2111C0572C54CF3E00005836 /* BeVietnamPro-Regular.ttf */,
+				2111C0582C54CF3E00005836 /* BeVietnamPro-SemiBold.ttf */,
+				2111C0592C54CF3E00005836 /* BeVietnamPro-SemiBoldItalic.ttf */,
+				2111C05A2C54CF3E00005836 /* BeVietnamPro-Thin.ttf */,
+				2111C05B2C54CF3E00005836 /* BeVietnamPro-ThinItalic.ttf */,
+				2111C05C2C54CF3E00005836 /* OFL.txt */,
+			);
+			path = Be_Vietnam_Pro;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2111C0032C51C9AA00005836 /* MyNose */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2111C0282C51C9AC00005836 /* Build configuration list for PBXNativeTarget "MyNose" */;
+			buildPhases = (
+				2111C0002C51C9AA00005836 /* Sources */,
+				2111C0012C51C9AA00005836 /* Frameworks */,
+				2111C0022C51C9AA00005836 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyNose;
+			productName = MyNose;
+			productReference = 2111C0042C51C9AA00005836 /* MyNose.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2111C0132C51C9AC00005836 /* MyNoseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2111C02B2C51C9AC00005836 /* Build configuration list for PBXNativeTarget "MyNoseTests" */;
+			buildPhases = (
+				2111C0102C51C9AC00005836 /* Sources */,
+				2111C0112C51C9AC00005836 /* Frameworks */,
+				2111C0122C51C9AC00005836 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2111C0162C51C9AC00005836 /* PBXTargetDependency */,
+			);
+			name = MyNoseTests;
+			productName = MyNoseTests;
+			productReference = 2111C0142C51C9AC00005836 /* MyNoseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2111C01D2C51C9AC00005836 /* MyNoseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2111C02E2C51C9AC00005836 /* Build configuration list for PBXNativeTarget "MyNoseUITests" */;
+			buildPhases = (
+				2111C01A2C51C9AC00005836 /* Sources */,
+				2111C01B2C51C9AC00005836 /* Frameworks */,
+				2111C01C2C51C9AC00005836 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2111C0202C51C9AC00005836 /* PBXTargetDependency */,
+			);
+			name = MyNoseUITests;
+			productName = MyNoseUITests;
+			productReference = 2111C01E2C51C9AC00005836 /* MyNoseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2111BFFC2C51C9AA00005836 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					2111C0032C51C9AA00005836 = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					2111C0132C51C9AC00005836 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 2111C0032C51C9AA00005836;
+					};
+					2111C01D2C51C9AC00005836 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 2111C0032C51C9AA00005836;
+					};
+				};
+			};
+			buildConfigurationList = 2111BFFF2C51C9AA00005836 /* Build configuration list for PBXProject "MyNose" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2111BFFB2C51C9AA00005836;
+			productRefGroup = 2111C0052C51C9AA00005836 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2111C0032C51C9AA00005836 /* MyNose */,
+				2111C0132C51C9AC00005836 /* MyNoseTests */,
+				2111C01D2C51C9AC00005836 /* MyNoseUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2111C0022C51C9AA00005836 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2111C0702C54CF3E00005836 /* OFL.txt in Resources */,
+				2111C0632C54CF3E00005836 /* BeVietnamPro-ExtraBoldItalic.ttf in Resources */,
+				2111C06E2C54CF3E00005836 /* BeVietnamPro-Thin.ttf in Resources */,
+				2111C0622C54CF3E00005836 /* BeVietnamPro-ExtraBold.ttf in Resources */,
+				2111C0652C54CF3E00005836 /* BeVietnamPro-ExtraLightItalic.ttf in Resources */,
+				2111C05F2C54CF3E00005836 /* BeVietnamPro-BlackItalic.ttf in Resources */,
+				2111C06F2C54CF3E00005836 /* BeVietnamPro-ThinItalic.ttf in Resources */,
+				2111C0612C54CF3E00005836 /* BeVietnamPro-BoldItalic.ttf in Resources */,
+				2111C0662C54CF3E00005836 /* BeVietnamPro-Italic.ttf in Resources */,
+				2111C0682C54CF3E00005836 /* BeVietnamPro-LightItalic.ttf in Resources */,
+				2111C06A2C54CF3E00005836 /* BeVietnamPro-MediumItalic.ttf in Resources */,
+				2111C06C2C54CF3E00005836 /* BeVietnamPro-SemiBold.ttf in Resources */,
+				2111C00F2C51C9AC00005836 /* Preview Assets.xcassets in Resources */,
+				2111C0672C54CF3E00005836 /* BeVietnamPro-Light.ttf in Resources */,
+				2111C0692C54CF3E00005836 /* BeVietnamPro-Medium.ttf in Resources */,
+				2111C00C2C51C9AC00005836 /* Assets.xcassets in Resources */,
+				2111C0642C54CF3E00005836 /* BeVietnamPro-ExtraLight.ttf in Resources */,
+				2111C0602C54CF3E00005836 /* BeVietnamPro-Bold.ttf in Resources */,
+				2111C05E2C54CF3E00005836 /* BeVietnamPro-Black.ttf in Resources */,
+				2111C06B2C54CF3E00005836 /* BeVietnamPro-Regular.ttf in Resources */,
+				2111C06D2C54CF3E00005836 /* BeVietnamPro-SemiBoldItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2111C0122C51C9AC00005836 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2111C01C2C51C9AC00005836 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2111C0002C51C9AA00005836 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2111C00A2C51C9AA00005836 /* ContentView.swift in Sources */,
+				2111C0082C51C9AA00005836 /* MyNoseApp.swift in Sources */,
+				2111C0722C5888D300005836 /* ViewModel.swift in Sources */,
+				2111C0322C520DC300005836 /* CrossAppVariables.swift in Sources */,
+				2111C0742C58C42000005836 /* SwiftUIView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2111C0102C51C9AC00005836 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2111C0192C51C9AC00005836 /* MyNoseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2111C01A2C51C9AC00005836 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2111C0232C51C9AC00005836 /* MyNoseUITests.swift in Sources */,
+				2111C0252C51C9AC00005836 /* MyNoseUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2111C0162C51C9AC00005836 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2111C0032C51C9AA00005836 /* MyNose */;
+			targetProxy = 2111C0152C51C9AC00005836 /* PBXContainerItemProxy */;
+		};
+		2111C0202C51C9AC00005836 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2111C0032C51C9AA00005836 /* MyNose */;
+			targetProxy = 2111C01F2C51C9AC00005836 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2111C0262C51C9AC00005836 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2111C0272C51C9AC00005836 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2111C0292C51C9AC00005836 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"MyNose/Preview Content\"";
+				DEVELOPMENT_TEAM = SDVM3QJL8X;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyNose/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Nosy;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mynose.fragrancecalculator;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		2111C02A2C51C9AC00005836 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"MyNose/Preview Content\"";
+				DEVELOPMENT_TEAM = SDVM3QJL8X;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyNose/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Nosy;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mynose.fragrancecalculator;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		2111C02C2C51C9AC00005836 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SDVM3QJL8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Test.MyNoseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyNose.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MyNose";
+			};
+			name = Debug;
+		};
+		2111C02D2C51C9AC00005836 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SDVM3QJL8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Test.MyNoseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyNose.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MyNose";
+			};
+			name = Release;
+		};
+		2111C02F2C51C9AC00005836 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SDVM3QJL8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Test.MyNoseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MyNose;
+			};
+			name = Debug;
+		};
+		2111C0302C51C9AC00005836 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SDVM3QJL8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Test.MyNoseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MyNose;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2111BFFF2C51C9AA00005836 /* Build configuration list for PBXProject "MyNose" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2111C0262C51C9AC00005836 /* Debug */,
+				2111C0272C51C9AC00005836 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2111C0282C51C9AC00005836 /* Build configuration list for PBXNativeTarget "MyNose" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2111C0292C51C9AC00005836 /* Debug */,
+				2111C02A2C51C9AC00005836 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2111C02B2C51C9AC00005836 /* Build configuration list for PBXNativeTarget "MyNoseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2111C02C2C51C9AC00005836 /* Debug */,
+				2111C02D2C51C9AC00005836 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2111C02E2C51C9AC00005836 /* Build configuration list for PBXNativeTarget "MyNoseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2111C02F2C51C9AC00005836 /* Debug */,
+				2111C0302C51C9AC00005836 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2111BFFC2C51C9AA00005836 /* Project object */;
+}
