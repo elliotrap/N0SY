@@ -42,13 +42,15 @@ struct ContentView: View {
         
 
         ZStack {
-            
+
             Rectangle()
                 .foregroundColor(Color("softPink"))
                 .opacity(0.6)
                 .frame(width: 700)
             
+
             ScrollView(showsIndicators: false) {
+
                 Spacer()
                     .frame(height: 50)
                 VStack {
@@ -419,7 +421,7 @@ struct ContentView: View {
                                             
                                             Rectangle()
                                                 .foregroundColor(.black)
-                                                .frame(width: 255, height: 205)
+                                                .frame(width: 155, height: 205)
                                                 .clipShape(TopLeftEdgeRectangle(radius: 29, corners: [.topLeft, .bottomRight]))
                                                 .padding(.top, 105)
                                             
@@ -776,9 +778,10 @@ struct ContentView: View {
         .frame(minWidth: 700, maxWidth: 900)
 
         .environment(\.sizeCategory, .small)
-     
+
 
     }
+    
     private func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
             calculateFragrance()
@@ -822,6 +825,8 @@ struct TopNoteStruct: View {
     @ObservedObject var variables = Oils.shared
     @ObservedObject var viewModel = FragranceViewModel.shared
 
+    
+    
     @State private var topNoteContainerHeight = 350
     @State private var topNoteOutsideContainerHeight = 355
     
@@ -832,10 +837,11 @@ struct TopNoteStruct: View {
     @State private var topNotesMinimize: Bool = false
     @State private var topNoteHints: Bool = false
 
-    @State private var showTopDropsPicker = false
+    @State private var showTopDropsPicker = true
     @State private var pendingTopOil: String? = nil
     @State private var selectedTopDrops: Int = 1
-    
+    @State private var selectedTopDropsText: String = "1"
+
     private func quickAddTop(_ oil: String, drops: String = "1") {
         variables.topNoteOilName = oil
         variables.topNoteDrops = drops
@@ -896,32 +902,134 @@ struct TopNoteStruct: View {
             }
             .padding(.leading, 2.5)
             .sheet(isPresented: $showTopDropsPicker) {
-                VStack(spacing: 16) {
-                    Text("How many drops to add?")
-                        .font(.custom("BeVietnamPro-Medium", size: 20))
-                    if let oil = pendingTopOil {
-                        Text(oil)
-                            .font(.custom("BeVietnamPro-Bold", size: 18))
-                    }
-                    Stepper(value: $selectedTopDrops, in: 1...200) {
-                        Text("Drops: \(selectedTopDrops)")
-                            .font(.custom("BeVietnamPro-Light", size: 17))
-                    }
-                    HStack(spacing: 14) {
-                        Button("Cancel") { showTopDropsPicker = false }
-                            .buttonStyle(.borderless)
-                        Button("Add") {
-                            if let oil = pendingTopOil {
-                                quickAddTop(oil, drops: String(selectedTopDrops))
+                let sheetPink = Color(red: 251/255, green: 195/255, blue: 255/255) // #FBC3FF
+                let corner: CGFloat = 50     // match presentationCornerRadius
+
+                ZStack {
+                    sheetPink.ignoresSafeArea()
+
+                    // Off-center layered card (black underlay + gray plate)
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.black)
+                            .frame(width: 305, height: 220)
+                            .clipShape(TopLeftEdgeRectangle(radius: 24, corners: [.topLeft, .bottomRight]))
+
+                        Rectangle()
+                            .foregroundColor(.gray)
+                            .frame(width: 300, height: 215)
+                            .clipShape(TopLeftEdgeRectangle(radius: 22, corners: [.topLeft, .bottomRight]))
+
+                        VStack(spacing: 14) {
+
+                            // Title + close “x”
+                            HStack {
+                                Text("Add Drops")
+                                    .font(.custom("BeVietnamPro-Medium", size: 22))
+                                Spacer()
+                                Button(action: { showTopDropsPicker = false }) {
+                                    Image(systemName: "x.square.fill")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(Color(.black))
+                                }
+                                .buttonStyle(.plain)
                             }
-                            showTopDropsPicker = false
+                            .frame(width: 270)
+
+                            // Oil name
+                            if let oil = pendingTopOil {
+                                Text(oil)
+                                    .font(.custom("BeVietnamPro-Bold", size: 18))
+                            }
+
+                            // Drops input field (mini beveled plate)
+                            HStack(spacing: 8) {
+                                Text("Drops:")
+                                    .font(.custom("BeVietnamPro-Light", size: 17))
+
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 90, height: 40)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+
+                                    TextField("e.g. 12", text: $selectedTopDropsText)
+                                        .keyboardType(.numberPad)
+                                        .multilineTextAlignment(.center)
+                                        .frame(width: 86, height: 36)
+                                        .background(Color("softBlue"))
+                                        .foregroundColor(.black)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 8, corners: [.topLeft, .bottomRight]))
+                                }
+
+                                Text("drops")
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                            }
+
+                            // Action buttons (twin beveled buttons)
+                            HStack(spacing: 12) {
+
+                                // Cancel
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 110, height: 50)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+
+                                    Button("Cancel") { showTopDropsPicker = false }
+                                        .font(.custom("BeVietnamPro-Light", size: 16))
+                                        .frame(width: 106, height: 46)
+                                        .background(Color("softBlue"))
+                                        .foregroundColor(.black)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                                }
+                                .buttonStyle(.borderless)
+
+                                // Add
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 110, height: 50)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+
+                                    Button("Add") {
+                                        if let oil = pendingTopOil {
+                                            let raw = selectedTopDropsText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            let n = Int(raw) ?? selectedTopDrops
+                                            let clamped = max(1, min(200, n))
+                                            quickAddTop(oil, drops: String(clamped))
+                                        }
+                                        showTopDropsPicker = false
+                                        topNoteHints = false
+                                    }
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 106, height: 46)
+                                    .background(Color("softBlue"))
+                                    .foregroundColor(.black)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                                }
+                                .buttonStyle(.borderless)
+                            }
+                            .padding(.top, 6)
                         }
-                        .buttonStyle(.borderless)
+                        .frame(width: 280)
                     }
-                    .padding(.top, 6)
+                    .padding(.top, 40)
                 }
-                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: corner, style: .continuous)
+                        .stroke(Color.black, lineWidth: 3)
+                        .frame(width: 399, height: 281)
+                        .allowsHitTesting(false)
+                        .padding(.top, 44)
+                )
+                .presentationDetents([.height(240)])
+                .presentationCornerRadius(52)
+                .presentationDragIndicator(.hidden)
+                .presentationBackground(sheetPink)
             }
+        
+            
             
             if topNoteHints {
                 ZStack {
@@ -943,10 +1051,12 @@ struct TopNoteStruct: View {
                                                 HStack {
                                                     Text(oil)
                                                         .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                        .padding(.leading, 10)
                                                     Spacer()
                                                     Button(action: {
                                                         pendingTopOil = oil
                                                         selectedTopDrops = 1
+                                                        selectedTopDropsText = "1"
                                                         showTopDropsPicker = true
                                                     }) {
                                                         HStack(spacing: 4) {
@@ -1021,20 +1131,7 @@ struct TopNoteStruct: View {
                         Text("Top Notes")
                             .font(.custom("BeVietnamPro-Medium", size: 35))
                         ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 21, height: 21)
-                            Button(action: {
-                                withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
-                                    topNoteHints = true
-                                    topNoteContainerHeight = 360
-                                    topNoteOutsideContainerHeight = 365
-                                    topNoteBackgroundContainerHeight = 360
-                                    topNoteBackgroundOutsideContainerHeight = 365
-                                }
-                            }, label: {
-                        
-                            })
-                            .buttonStyle(.plain)
+        
                         }
                      
                     }
@@ -1312,6 +1409,11 @@ struct MiddleNoteStruct: View {
     @State private var middleNotesMinimize: Bool = false
     @State private var middleNoteHints: Bool = false
 
+    @State private var showMiddleDropsPicker = false
+    @State private var pendingMiddleOil: String? = nil
+    @State private var selectedMiddleDrops: Int = 1
+    @State private var selectedMiddleDropsText: String = "1"
+
     private func quickAddMiddle(_ oil: String, drops: String = "1") {
         variables.middleNoteOilName = oil
         variables.middleNoteDrops = drops
@@ -1419,7 +1521,133 @@ struct MiddleNoteStruct: View {
                 }
             }
             .padding(.leading, 2.5)
-            
+            .sheet(isPresented: $showMiddleDropsPicker) {
+                let sheetPink = Color(red: 251/255, green: 195/255, blue: 255/255) // #FBC3FF
+                let corner: CGFloat = 50     // match presentationCornerRadius
+
+                ZStack {
+                    sheetPink.ignoresSafeArea()
+
+                    // Off-center layered card (black underlay + gray plate)
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.black)
+                            .frame(width: 305, height: 220)
+                            .clipShape(TopLeftEdgeRectangle(radius: 24, corners: [.topLeft, .bottomRight]))
+
+                        Rectangle()
+                            .foregroundColor(.gray)
+                            .frame(width: 300, height: 215)
+                            .clipShape(TopLeftEdgeRectangle(radius: 22, corners: [.topLeft, .bottomRight]))
+
+                        VStack(spacing: 14) {
+
+                            // Title + close “x”
+                            HStack {
+                                Text("Add Drops")
+                                    .font(.custom("BeVietnamPro-Medium", size: 22))
+                                Spacer()
+                                Button(action: { showMiddleDropsPicker = false }) {
+                                    Image(systemName: "x.square.fill")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(Color(.black))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .frame(width: 270)
+
+                            // Oil name
+                            if let oil = pendingMiddleOil {
+                                Text(oil)
+                                    .font(.custom("BeVietnamPro-Bold", size: 18))
+                            }
+
+                            // Drops input field (mini beveled plate)
+                            HStack(spacing: 8) {
+                                Text("Drops:")
+                                    .font(.custom("BeVietnamPro-Light", size: 17))
+
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 90, height: 40)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+
+                                    TextField("e.g. 12", text: $selectedMiddleDropsText)
+                                        .keyboardType(.numberPad)
+                                        .multilineTextAlignment(.center)
+                                        .frame(width: 86, height: 36)
+                                        .background(Color("softBlue"))
+                                        .foregroundColor(.black)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 8, corners: [.topLeft, .bottomRight]))
+                                }
+
+                                Text("drops")
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                            }
+
+                            // Action buttons (twin beveled buttons)
+                            HStack(spacing: 12) {
+
+                                // Cancel
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 110, height: 50)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+
+                                    Button("Cancel") { showMiddleDropsPicker = false }
+                                        .font(.custom("BeVietnamPro-Light", size: 16))
+                                        .frame(width: 106, height: 46)
+                                        .background(Color("softBlue"))
+                                        .foregroundColor(.black)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                                }
+                                .buttonStyle(.borderless)
+
+                                // Add
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 110, height: 50)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+
+                                    Button("Add") {
+                                        if let oil = pendingMiddleOil {
+                                            let raw = selectedMiddleDropsText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            let n = Int(raw) ?? selectedMiddleDrops
+                                            let clamped = max(1, min(200, n))
+                                            quickAddMiddle(oil, drops: String(clamped))
+                                        }
+                                        showMiddleDropsPicker = false
+                                        middleNoteHints = false
+                                    }
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 106, height: 46)
+                                    .background(Color("softBlue"))
+                                    .foregroundColor(.black)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                                }
+                                .buttonStyle(.borderless)
+                            }
+                            .padding(.top, 6)
+                        }
+                        .frame(width: 280)
+                    }
+                    .padding(.top, 40)
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: corner, style: .continuous)
+                        .stroke(Color.black, lineWidth: 3)
+                        .frame(width: 399, height: 281)
+                        .allowsHitTesting(false)
+                        .padding(.top, 44)
+                )
+                .presentationDetents([.height(240)])
+                .presentationCornerRadius(52)
+                .presentationDragIndicator(.hidden)
+                .presentationBackground(sheetPink)
+            }
             
             if middleNoteHints {
                 ZStack {
@@ -1441,13 +1669,18 @@ struct MiddleNoteStruct: View {
                                                 HStack {
                                                     Text(oil)
                                                         .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                        .padding(.leading, 10)
+
                                                     Spacer()
-                                                    Button(action: { quickAddMiddle(oil) }) {
+                                                    Button(action: {
+                                                        pendingMiddleOil = oil
+                                                        selectedMiddleDrops = 1
+                                                        selectedMiddleDropsText = "1"
+                                                        showMiddleDropsPicker = true
+                                                    }) {
                                                         HStack(spacing: 4) {
-                                                            Image(systemName: "plus.circle.fill")
-                                                                .font(.system(size: 14))
-                                                            Text("Add")
-                                                                .font(.custom("BeVietnamPro-Light", size: 13))
+                                                            Image(systemName: "plus.circle.fill").font(.system(size: 14))
+                                                            Text("Add").font(.custom("BeVietnamPro-Light", size: 13))
                                                         }
                                                         .frame(height: 28)
                                                         .padding(.horizontal, 8)
@@ -1515,23 +1748,6 @@ struct MiddleNoteStruct: View {
                         
                         Text("Middle Notes")
                             .font(.custom("BeVietnamPro-Medium", size: 35))
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 21, height: 21)
-                            Button(action: {
-                                withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
-                                    middleNoteHints = true
-                                    middleNoteContainerHeight = 360
-                                    middleNoteOutsideContainerHeight = 365
-                                    middleNoteBackgroundContainerHeight = 360
-                                    middleNoteBackgroundOutsideContainerHeight = 365
-                                }
-                            }, label: {
-                                Image(systemName: "info.circle")
-                                    .font(.system(size: 22))
-                            })
-                            .buttonStyle(.plain)
-                        }
                      
                     }
                     
@@ -1559,32 +1775,55 @@ struct MiddleNoteStruct: View {
                             }
                         }
                         
-                        // Button to add the entry to the list
+                    HStack(spacing: 12) {
+                        // Add via text fields
                         Button(action: {
                             withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.1)) {
                                 viewModel.addMiddleNoteEntry()
                             }
-                            
                         }) {
-                            
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.black)
-                                    .frame(width: 125, height: 60)
+                                    .frame(width: 115, height: 56)
                                     .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
-                                
-                                
                                 Text("Add Aroma")
                                     .underline(false)
-                                    .font(.custom("BeVietnamPro-Light", size: 17))
-                                    .frame(width: 120, height: 56)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 110, height: 52)
                                     .background(Color("softBlue"))
                                     .foregroundColor(.black)
                                     .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
-                                
-                                
                             }
                         }
+                        .buttonStyle(.borderless)
+
+                        // Open the hints list
+                        Button(action: {
+                            withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
+                                middleNoteHints = true
+                                middleNoteContainerHeight = 360
+                                middleNoteOutsideContainerHeight = 365
+                                middleNoteBackgroundContainerHeight = 360
+                                middleNoteBackgroundOutsideContainerHeight = 365
+                            }
+                        }) {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.black)
+                                    .frame(width: 115, height: 56)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+                                Text("Hints")
+                                    .underline(false)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 110, height: 52)
+                                    .background(Color("softBlue"))
+                                    .foregroundColor(.black)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                            }
+                        }
+                        .buttonStyle(.borderless)
+                    }
                         .buttonStyle(.borderless)
                         
                         Spacer()
@@ -1775,6 +2014,11 @@ struct BaseNoteStruct: View {
     @State private var baseNotesMinimize: Bool = false
     @State private var baseNoteHints: Bool = false
 
+    @State private var showBaseDropsPicker = false
+    @State private var pendingBaseOil: String? = nil
+    @State private var selectedBaseDrops: Int = 1
+    @State private var selectedBaseDropsText: String = "1"
+    
     private func quickAddBase(_ oil: String, drops: String = "1") {
         variables.baseNoteOilName = oil
         variables.baseNoteDrops = drops
@@ -1848,7 +2092,133 @@ struct BaseNoteStruct: View {
                 }
             }
             .padding(.leading, 2.5)
-            
+            .sheet(isPresented: $showBaseDropsPicker) {
+                let sheetPink = Color(red: 251/255, green: 195/255, blue: 255/255) // #FBC3FF
+                let corner: CGFloat = 50     // match presentationCornerRadius
+
+                ZStack {
+                    sheetPink.ignoresSafeArea()
+
+                    // Off-center layered card (black underlay + gray plate)
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.black)
+                            .frame(width: 305, height: 220)
+                            .clipShape(TopLeftEdgeRectangle(radius: 24, corners: [.topLeft, .bottomRight]))
+
+                        Rectangle()
+                            .foregroundColor(.gray)
+                            .frame(width: 300, height: 215)
+                            .clipShape(TopLeftEdgeRectangle(radius: 22, corners: [.topLeft, .bottomRight]))
+
+                        VStack(spacing: 14) {
+
+                            // Title + close “x”
+                            HStack {
+                                Text("Add Drops")
+                                    .font(.custom("BeVietnamPro-Medium", size: 22))
+                                Spacer()
+                                Button(action: { showBaseDropsPicker = false }) {
+                                    Image(systemName: "x.square.fill")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(Color(.black))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .frame(width: 270)
+
+                            // Oil name
+                            if let oil = pendingBaseOil {
+                                Text(oil)
+                                    .font(.custom("BeVietnamPro-Bold", size: 18))
+                            }
+
+                            // Drops input field (mini beveled plate)
+                            HStack(spacing: 8) {
+                                Text("Drops:")
+                                    .font(.custom("BeVietnamPro-Light", size: 17))
+
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 90, height: 40)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+
+                                    TextField("e.g. 12", text: $selectedBaseDropsText)
+                                        .keyboardType(.numberPad)
+                                        .multilineTextAlignment(.center)
+                                        .frame(width: 86, height: 36)
+                                        .background(Color("softBlue"))
+                                        .foregroundColor(.black)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 8, corners: [.topLeft, .bottomRight]))
+                                }
+
+                                Text("drops")
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                            }
+
+                            // Action buttons (twin beveled buttons)
+                            HStack(spacing: 12) {
+
+                                // Cancel
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 110, height: 50)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+
+                                    Button("Cancel") { showBaseDropsPicker = false }
+                                        .font(.custom("BeVietnamPro-Light", size: 16))
+                                        .frame(width: 106, height: 46)
+                                        .background(Color("softBlue"))
+                                        .foregroundColor(.black)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                                }
+                                .buttonStyle(.borderless)
+
+                                // Add
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.black)
+                                        .frame(width: 110, height: 50)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+
+                                    Button("Add") {
+                                        if let oil = pendingBaseOil {
+                                            let raw = selectedBaseDropsText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            let n = Int(raw) ?? selectedBaseDrops
+                                            let clamped = max(1, min(200, n))
+                                            quickAddBase(oil, drops: String(clamped))
+                                        }
+                                        showBaseDropsPicker = false
+                                        baseNoteHints = false
+                                    }
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 106, height: 46)
+                                    .background(Color("softBlue"))
+                                    .foregroundColor(.black)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                                }
+                                .buttonStyle(.borderless)
+                            }
+                            .padding(.top, 6)
+                        }
+                        .frame(width: 280)
+                    }
+                    .padding(.top, 40)
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: corner, style: .continuous)
+                        .stroke(Color.black, lineWidth: 3)
+                        .frame(width: 399, height: 281)
+                        .allowsHitTesting(false)
+                        .padding(.top, 44)
+                )
+                .presentationDetents([.height(240)])
+                .presentationCornerRadius(52)
+                .presentationDragIndicator(.hidden)
+                .presentationBackground(sheetPink)
+            }
             
             if baseNoteHints {
                 ZStack {
@@ -1870,13 +2240,18 @@ struct BaseNoteStruct: View {
                                                 HStack {
                                                     Text(oil)
                                                         .font(.custom("BeVietnamPro-Bold", size: 17))
+                                                        .padding(.leading, 10)
+
                                                     Spacer()
-                                                    Button(action: { quickAddBase(oil) }) {
+                                                    Button(action: {
+                                                        pendingBaseOil = oil
+                                                        selectedBaseDrops = 1
+                                                        selectedBaseDropsText = "1"
+                                                        showBaseDropsPicker = true
+                                                    }) {
                                                         HStack(spacing: 4) {
-                                                            Image(systemName: "plus.circle.fill")
-                                                                .font(.system(size: 14))
-                                                            Text("Add")
-                                                                .font(.custom("BeVietnamPro-Light", size: 13))
+                                                            Image(systemName: "plus.circle.fill").font(.system(size: 14))
+                                                            Text("Add").font(.custom("BeVietnamPro-Light", size: 13))
                                                         }
                                                         .frame(height: 28)
                                                         .padding(.horizontal, 8)
@@ -1944,23 +2319,7 @@ struct BaseNoteStruct: View {
                         
                         Text("Base Notes")
                             .font(.custom("BeVietnamPro-Medium", size: 35))
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 21, height: 21)
-                            Button(action: {
-                                withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
-                                    baseNoteHints = true
-                                    baseNoteContainerHeight = 360
-                                    baseNoteOutsideContainerHeight = 365
-                                    baseNoteBackgroundContainerHeight = 360
-                                    baseNoteBackgroundOutsideContainerHeight = 365
-                                }
-                            }, label: {
-                                Image(systemName: "info.circle")
-                                    .font(.system(size: 22))
-                            })
-                            .buttonStyle(.plain)
-                        }
+
                      
                     }
                     
@@ -1989,31 +2348,53 @@ struct BaseNoteStruct: View {
                         }
                         
                         // Button to add the entry to the list
+                    HStack(spacing: 12) {
                         Button(action: {
                             withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.1)) {
                                 viewModel.addBaseNoteEntry()
                             }
-                            
                         }) {
-                            
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.black)
-                                    .frame(width: 125, height: 60)
+                                    .frame(width: 115, height: 56)
                                     .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
-                                
-                                
                                 Text("Add Aroma")
                                     .underline(false)
-                                    .font(.custom("BeVietnamPro-Light", size: 17))
-                                    .frame(width: 120, height: 56)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 110, height: 52)
                                     .background(Color("softBlue"))
                                     .foregroundColor(.black)
                                     .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
-                                
-                                
                             }
                         }
+                        .buttonStyle(.borderless)
+
+                        Button(action: {
+                            withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
+                                baseNoteHints = true
+                                baseNoteContainerHeight = 360
+                                baseNoteOutsideContainerHeight = 365
+                                baseNoteBackgroundContainerHeight = 360
+                                baseNoteBackgroundOutsideContainerHeight = 365
+                            }
+                        }) {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.black)
+                                    .frame(width: 115, height: 56)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topRight, .bottomLeft]))
+                                Text("Hints")
+                                    .underline(false)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .frame(width: 110, height: 52)
+                                    .background(Color("softBlue"))
+                                    .foregroundColor(.black)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topRight, .bottomLeft]))
+                            }
+                        }
+                        .buttonStyle(.borderless)
+                    }
                         .buttonStyle(.borderless)
                         
                         Spacer()
