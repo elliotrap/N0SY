@@ -21,10 +21,14 @@ struct ContentView: View {
 
     @ObservedObject var viewModel = FragranceViewModel.shared
 
-    @State private var nameFragranceScreen = false
+    @State private var nameFragranceScreen = true
     
-    @State private var nameOfFragrance = ""
-
+    @State private var nameOfFragrance: String = {
+        let df = DateFormatter()
+        df.dateStyle = .medium   // e.g., Aug 13, 2025
+        df.timeStyle = .none
+        return df.string(from: Date())
+    }()
 
     @State private var fontNames: [String] = []
     
@@ -33,8 +37,8 @@ struct ContentView: View {
     @State private var middleLeaning = true
     
     @State private var bottomLeaning = false
+    @FocusState private var isTotalDropsFocused: Bool
     
-   @State var questionMarkPressed = false
     
 
 
@@ -51,15 +55,17 @@ struct ContentView: View {
 
             ScrollView(showsIndicators: false) {
 
-                Spacer()
-                    .frame(height: 50)
+        
                 VStack {
                     
                     HStack {
                         Spacer()
                             .frame(width: 5)
                         if nameFragranceScreen {
+                            // put this code in a struct and i'll call it here.
                             VStack {
+                                Spacer()
+                                    .frame(height: 90)
                                 ZStack {
                                     HStack {
                                         Spacer()
@@ -118,7 +124,8 @@ struct ContentView: View {
                                     }
                                 }
                                 .padding(.bottom, 40)
-                                
+                                .scaleEffect(1.2)
+
                                 ZStack {
                                     VStack(spacing: 20) {
                                         VStack {
@@ -158,21 +165,49 @@ struct ContentView: View {
                                                         .frame(width: 15)
                                                 }
                                                 
-                                                VStack {
-                                                    Text("Name your fragrance!")
-                                                        .font(.custom("BeVietnamPro-Medium", size: 20))
-                                                    
-                                                    ZStack {
-                                                        
-                                                        RoundedRectangle(cornerRadius: 6)
-                                                            .frame(width: 153, height: 37)
-                                                        TextField("Enter Fragrance name", text: $nameOfFragrance)
-                                                            .characterLimit($nameOfFragrance, limit: 14)
-                                                            .font(.custom("BeVietnamPro-Light", size: 15))
-                                                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                            .frame(width: 150)
-                                                    }
-                                                }
+                    VStack(spacing: 10) {
+                        Text("Name your fragrance")
+                            .font(.custom("BeVietnamPro-Medium", size: 20))
+
+                        // Beveled input to match app style
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(.black)
+                                .frame(width: 235, height: 48)
+                                .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topLeft, .bottomRight]))
+
+                            HStack(spacing: 8) {
+                                Image(systemName: "pencil")
+                                    .font(.system(size: 16))
+                                    .opacity(0.6)
+                                TextField("Enter fragrance name", text: $nameOfFragrance)
+                                    .characterLimit($nameOfFragrance, limit: 20)
+                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .textInputAutocapitalization(.words)
+                                    .disableAutocorrection(true)
+                                    .submitLabel(.done)
+                                    .accessibilityLabel("Fragrance name")
+
+                            }
+                            .padding(.horizontal, 10)
+                            .frame(width: 231, height: 44)
+                            .background(Color(.white))
+                            .foregroundColor(.black).opacity(0.89)
+                            .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+                            // Clear button
+                            .overlay(alignment: .trailing) {
+                                if !nameOfFragrance.isEmpty {
+                                    Button(action: { nameOfFragrance = "" }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .font(.system(size: 15))
+                                            .opacity(0.6)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .padding(.trailing, 8)
+                                }
+                            }
+                        }
+                    }
                                                 .padding(.bottom, 20)
                                                 
                                             }
@@ -216,21 +251,68 @@ struct ContentView: View {
                                                     .frame(width: 15)
                                             }
                                             
-                                            VStack {
-                                                Text("How many drops of oil?")
-                                                    .font(.custom("BeVietnamPro-Medium", size: 20))
-                                                
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 6)
-                                                        .frame(width: 58, height: 37)
-                                                    TextField("Drops", text: $variables.totalDrops)
-                                                        .font(.custom("BeVietnamPro-Light", size: 15))
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                        .frame(width: 55)
-                                                }
-                                            }
-                                            .padding(.bottom, 20)
-                                        }
+            VStack(spacing: 10) {
+                Text("How many drops of oil?")
+                    .font(.custom("BeVietnamPro-Medium", size: 20))
+
+                // Beveled input to match the app style, with larger hit areas
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.black)
+                        .frame(width: 144, height: 48)
+                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topLeft, .bottomRight]))
+
+                    HStack(spacing: 0) {
+                        // minus button (bigger hit target, still -1)
+                        Button(action: {
+                            let n = Int(variables.totalDrops) ?? 0
+                            variables.totalDrops = String(max(0, n - 1))
+                        }) {
+                            Image(systemName: "minus")
+                                .font(.system(size: 16))
+                                .frame(width: 44, height: 44) // bigger tap area per HIG
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        
+
+                        TextField("Drops", text: $variables.totalDrops)
+                            .font(.custom("BeVietnamPro-Light", size: 16))
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
+                            .frame(width: 140, height: 44)
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .opacity(0.89)
+                            .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+                            .accessibilityLabel("Total desired drops")
+                            .focused($isTotalDropsFocused)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    Button("Done") { isTotalDropsFocused = false }
+                                }
+                            }
+
+                        // plus button (bigger hit target, +5)
+                        Button(action: {
+                            let n = Int(variables.totalDrops) ?? 0
+                            variables.totalDrops = String(min(999, n + 5))
+                        }) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 16))
+                                .frame(width: 44, height: 44) // bigger tap area per HIG
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.horizontal, 10)
+                    .frame(width: 251, height: 44)
+                    .foregroundColor(.black)
+                }
+            }
+       .padding(.bottom, 20)
+    }
                                         
                                         
                                         ZStack {
@@ -278,32 +360,6 @@ struct ContentView: View {
                                                         .lineLimit(2)
                                                         .frame(width: 200)
                                                     
-                                                    ZStack {
-                                                        RoundedRectangle(cornerRadius: 5)
-                                                            .frame(width: 21, height: 21)
-                                                        
-                                                        ZStack {
-                                                            
-                                                            RoundedRectangle(cornerRadius: 5)
-                                                                .frame(width: 21, height: 21)
-                                                            
-                                                            Button(action: {
-                                                                withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
-                                                                    questionMarkPressed = true
-                                                                    
-                                                                    
-                                                                }
-                                                            }, label: {
-                                                                Image(systemName: "questionmark.app.fill")
-                                                                    .font(.system(size: 20))
-                                                                    .foregroundColor(Color(.gray))
-                                                                
-                                                                
-                                                            })
-                                                            .buttonStyle(.plain)
-                                                            
-                                                        }
-                                                    }
                                                     
                                                     
                                                 }
@@ -379,14 +435,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                            
-                                     
-                    
-                   
-                                     
-                                        
-     
-           
+
                                         Spacer()
                                             .frame(height: 20)
                                         ZStack {
@@ -410,89 +459,16 @@ struct ContentView: View {
                                                     .foregroundColor(.black)
                                                     .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.bottomLeft, .bottomRight]))
                                                 
-                                            }
-                                            .buttonStyle(.borderless)
                                         }
-                                    
-                                    if  questionMarkPressed {
-                                        ZStack {
-                                            
-                                            
-                                            
-                                            Rectangle()
-                                                .foregroundColor(.black)
-                                                .frame(width: 155, height: 205)
-                                                .clipShape(TopLeftEdgeRectangle(radius: 29, corners: [.topLeft, .bottomRight]))
-                                                .padding(.top, 105)
-                                            
-                                            
-                                            Rectangle()
-                                                .foregroundColor(.gray)
-                                                .frame(width: 250, height: 200)
-                                                .clipShape(TopLeftEdgeRectangle(radius: 27, corners: [.topLeft, .bottomRight]))
-                                                .padding(.top, 105)
-                                            
-                                            HStack {
-                                                
-                                                VStack {
-                                                    
-                                                    ZStack {
-                                                        Rectangle()
-                                                            .foregroundColor(.black)
-                                                            .frame(width: 255, height: 205)
-                                                            .clipShape(TopLeftEdgeRectangle(radius: 29, corners: [.topLeft, .bottomRight]))
-                                                            .padding(.top, 105)
-                                                        
-                                                        Rectangle()
-                                                            .foregroundColor(.gray)
-                                                            .frame(width: 250, height: 200)
-                                                            .clipShape(TopLeftEdgeRectangle(radius: 27, corners: [.topLeft, .bottomRight]))
-                                                            .padding(.top, 105)
-                                                        
-                                                        
-                                                    }
-                                                    Spacer()
-                                                        .frame(height: 15)
-                                                }
-                                                Spacer()
-                                                    .frame(width: 15)
-                                            }
-                                            
-                                            HStack {
-                                                Spacer()
-                                                    .frame(width: 195)
-                                                VStack {
-                                                    Button(action: {
-                                                        withAnimation(.spring(response: 2, dampingFraction: 0.8)) {
-                                                            questionMarkPressed = false
-                                                            
-                                                            
-                                                        }
-                                                    }) {
-                                                        Image(systemName: "x.square")
-                                                            .font(.system(size: 25))
-                                                            .foregroundColor(Color(.black))
-                                                    }
-                                                    .buttonStyle(.borderless)
-                                                    Spacer()
-                                                        .frame(height: 70)
-                                                }
-                                            }
-                                            Text("Some smell profiles can have only a top to middle smell note, or a middle to base note profile. For a more brighter smell you could go for more of a top leaning fragrance, and vice versa.")
-                                                .frame(width: 230, height: 400)
-                                                .lineLimit(7)
-                                                .padding(.top, 90)
-                                        }
-                                    }
-                                    Spacer()
-                                        .frame(height: 100)
-                                
+                                        .buttonStyle(.borderless)
+                                }
                             }
-                            
                         } else if nameFragranceScreen == false {
                            
                             VStack {
-                            
+                                Spacer()
+                                    .frame(height: 55)
+                                
                                     HStack {
                                  
                                     ZStack {
@@ -663,12 +639,7 @@ struct ContentView: View {
                                     } else if bottomLeaning {
                                         
                                         ZStack {
-
-
-
-                                            
-                                      
-                                            
+ 
                                          Rectangle()
                                                 .foregroundColor(.black)
                                                 .frame(width: 355, height: 65)
@@ -716,7 +687,7 @@ struct ContentView: View {
                                                     Rectangle()
                                                         .frame(width: 200, height: 2)
                                                         .rotationEffect(.degrees(170))
-                                               
+
                                                 }
                                              
                                             }
@@ -728,6 +699,7 @@ struct ContentView: View {
                                         BaseNoteStruct()
                                         
                                     } else if middleLeaning {
+                                        
                                         TopNoteStruct()
 
                                         MiddleNoteStruct()
@@ -735,11 +707,6 @@ struct ContentView: View {
                                         BaseNoteStruct()
                                             .padding(.bottom, 20)
                                     }
-                                    
-                                    
-                       
-           
-                                    
                                 }
                                 ZStack {
                                     Rectangle()
@@ -763,7 +730,7 @@ struct ContentView: View {
                                     
                                     
                                 }
-                                .padding(.bottom, 50)
+                                .padding(.bottom, 15)
                             }
                         }
                     }
@@ -772,6 +739,11 @@ struct ContentView: View {
             .onAppear {
                       startTimer()
                   }
+            .onChange(of: nameFragranceScreen) { isNaming in
+                if isNaming && nameOfFragrance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    nameOfFragrance = defaultFragranceName()
+                }
+            }
 
         }
         .edgesIgnoringSafeArea(.all)
@@ -782,6 +754,19 @@ struct ContentView: View {
 
     }
     
+    struct AddAromaScreen: View {
+        var body: some View {
+            
+        }
+    }
+    
+    private func defaultFragranceName() -> String {
+        let df = DateFormatter()
+        df.dateStyle = .medium   // e.g., Aug 12, 2025
+        df.timeStyle = .none
+        return df.string(from: Date())
+    }
+
     private func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
             calculateFragrance()
@@ -837,10 +822,11 @@ struct TopNoteStruct: View {
     @State private var topNotesMinimize: Bool = false
     @State private var topNoteHints: Bool = false
 
-    @State private var showTopDropsPicker = true
+    @State private var showTopDropsPicker = false
     @State private var pendingTopOil: String? = nil
     @State private var selectedTopDrops: Int = 1
     @State private var selectedTopDropsText: String = "1"
+    @FocusState private var isTopDropsFocused: Bool
 
     private func quickAddTop(_ oil: String, drops: String = "1") {
         variables.topNoteOilName = oil
@@ -851,15 +837,29 @@ struct TopNoteStruct: View {
     }
 
 
-    let essentialOilNames = [
-        "Basil", "Balm Mint Bush", "Bergamot", "Eucalyptus Dives", "Eucalyptus Globulus",
-        "Eucalyptus Radiata", "Fennel", "Fragonia", "Grapefruit", "Kumquat", "Kunzea",
-        "Laurel Leaf", "Lemon", "Lemongrass", "Lime", "Mandarin", "Moldavian Dragonhead",
-        "Orange Blood", "Orange Sweet", "Peppermint", "Petitgrain", "Pine Scots",
-        "Ravensara", "Ravintsara", "Rosalina", "Sage Dalmatian", "Saro", "Spearmint",
-        "Spruce Black", "Tangerine", "Wintergreen", "Yuzu"
+    // TOP — most fresh → least fresh
+    let topNoteEssentialOilNames = [
+        "Peppermint",
+        "Spearmint",
+        "Eucalyptus",
+        "Lime",
+        "Lemon",
+        "Grapefruit",
+        "Bergamot",
+        "Sweet Orange",
+        "Mandarin",
+        "Lemongrass",
+        "Citronella",
+        "Petitgrain",
+        "Neroli",
+        "Tea Tree",
+        "Pine Needle",
+        "Fir Needle",
+        "Rosemary",
+        "Basil (Linalool)",
+        "Coriander Seed",
+        "Ginger"
     ]
-    
     var body: some View {
 
         ZStack {
@@ -941,30 +941,62 @@ struct TopNoteStruct: View {
                                 Text(oil)
                                     .font(.custom("BeVietnamPro-Bold", size: 18))
                             }
+                            
+                    
 
-                            // Drops input field (mini beveled plate)
-                            HStack(spacing: 8) {
-                                Text("Drops:")
-                                    .font(.custom("BeVietnamPro-Light", size: 17))
-
+                            // Drops input field (plus/minus + textfield)
+                            HStack(spacing: 0) {
+                                // minus button (bigger hit target, −1)
+                                Button(action: {
+                                    let n = Int(selectedTopDropsText.trimmingCharacters(in: .whitespacesAndNewlines)) ?? selectedTopDrops
+                                    selectedTopDropsText = String(max(1, n - 1))
+                                }) {
+                                    Image(systemName: "minus")
+                                        .font(.system(size: 16))
+                                        .frame(width: 44, height: 44) // bigger tap area per HIG
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
                                 ZStack {
                                     Rectangle()
                                         .foregroundColor(.black)
-                                        .frame(width: 90, height: 40)
-                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
-
-                                    TextField("e.g. 12", text: $selectedTopDropsText)
+                                        .frame(width: 144, height: 48)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 12, corners: [.topLeft, .bottomRight]))
+                                    
+                                    
+                                    TextField("Drops", text: $selectedTopDropsText)
+                                        .font(.custom("BeVietnamPro-Light", size: 16))
                                         .keyboardType(.numberPad)
                                         .multilineTextAlignment(.center)
-                                        .frame(width: 86, height: 36)
-                                        .background(Color("softBlue"))
+                                        .frame(width: 140, height: 44)
+                                        .background(Color.white)
                                         .foregroundColor(.black)
-                                        .clipShape(TopLeftEdgeRectangle(radius: 8, corners: [.topLeft, .bottomRight]))
+                                        .opacity(0.89)
+                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+                                        .accessibilityLabel("Drops to add")
+                                        .focused($isTopDropsFocused)
+                                        .toolbar {
+                                            ToolbarItemGroup(placement: .keyboard) {
+                                                Spacer()
+                                                Button("Done") { isTopDropsFocused = false }
+                                            }
+                                        }
                                 }
-
-                                Text("drops")
-                                    .font(.custom("BeVietnamPro-Light", size: 16))
+                                // plus button (bigger hit target, +5)
+                                Button(action: {
+                                    let n = Int(selectedTopDropsText.trimmingCharacters(in: .whitespacesAndNewlines)) ?? selectedTopDrops
+                                    selectedTopDropsText = String(min(200, n + 5))
+                                }) {
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 16))
+                                        .frame(width: 44, height: 44) // bigger tap area per HIG
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
                             }
+                            .padding(.horizontal, 10)
+                            .frame(width: 251, height: 44)
+                            .foregroundColor(.black)
 
                             // Action buttons (twin beveled buttons)
                             HStack(spacing: 12) {
@@ -1036,7 +1068,7 @@ struct TopNoteStruct: View {
                     VStack {
                     HStack {
                         ScrollView {
-                            ForEach(essentialOilNames, id: \.self) { oil in
+                            ForEach(topNoteEssentialOilNames, id: \.self) { oil in
                                 HStack(spacing: 0) {
                                     Rectangle()
                                         .fill(Color(.black))
@@ -1413,6 +1445,7 @@ struct MiddleNoteStruct: View {
     @State private var pendingMiddleOil: String? = nil
     @State private var selectedMiddleDrops: Int = 1
     @State private var selectedMiddleDropsText: String = "1"
+    @FocusState private var isMiddleDropsFocused: Bool
 
     private func quickAddMiddle(_ oil: String, drops: String = "1") {
         variables.middleNoteOilName = oil
@@ -1427,57 +1460,24 @@ struct MiddleNoteStruct: View {
 ////           EssentialOil(name: "Bergamot", drops: 12),
 ////           EssentialOil(name: "Eucalyptus Globulus", drops: 20)
 //    ]
-    let essentialOilNames = [
-        "Allspice",
-        "Balsam Fir",
-        "Black Pepper",
-        "Blue Cypress",
-        "Blue Tansy",
-        "Blue Yarrow",
-        "Camphor",
-        "Cardamom",
-        "Carrot Seed",
-        "Catnip",
-        "Chamomile German",
-        "Chamomile Roman",
-        "Cinnamon Bark",
-        "Cinnamon Cassia",
-        "Cinnamon Leaf",
-        "Citronella",
-        "Clary Sage",
-        "Clove Bud",
-        "Coriander Seed",
-        "Cypress",
-        "Davana",
-        "Dill Weed",
-        "Elemi",
-        "Geranium Bourbon",
-        "Geranium Egyptian",
-        "Ginger Root",
-        "Helichrysum Italicum",
-        "Ho Wood",
-        "Jasmine Absolute",
-        "Juniper Berry",
-        "Magnolia Flower",
-        "Manuka",
-        "Marjoram Sweet",
-        "May Chang",
-        "Melissa",
-        "Neroli",
-        "Nutmeg",
-        "Oregano",
+    // MIDDLE — most fresh → most grounding (lavender up top, as requested)
+    let middleNoteEssentialOilNames = [
+        "Lavender",
         "Palmarosa",
-        "Palo Santo",
-        "Rhododendron",
-        "Rose Absolute",
-        "Rose Otto",
-        "Rosemary",
-        "Sea Fennel",
-        "Star Anise",
-        "Tea Tree",
-        "Thyme",
-        "Ylang Ylang Complete",
-        "Ylang Ylang Extra"
+        "Geranium",
+        "Cardamom",
+        "Clary Sage",
+        "Roman Chamomile",
+        "Cypress",
+        "Sweet Marjoram",
+        "Ho Wood",
+        "Black Pepper",
+        "Rose (Absolute)",
+        "Jasmine (Absolute)",
+        "Ylang Ylang",
+        "Cinnamon Leaf",
+        "Nutmeg",
+        "Bay Laurel"
     ]
     
     var body: some View {
@@ -1562,29 +1562,53 @@ struct MiddleNoteStruct: View {
                                     .font(.custom("BeVietnamPro-Bold", size: 18))
                             }
 
-                            // Drops input field (mini beveled plate)
-                            HStack(spacing: 8) {
-                                Text("Drops:")
-                                    .font(.custom("BeVietnamPro-Light", size: 17))
-
-                                ZStack {
-                                    Rectangle()
-                                        .foregroundColor(.black)
-                                        .frame(width: 90, height: 40)
-                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
-
-                                    TextField("e.g. 12", text: $selectedMiddleDropsText)
-                                        .keyboardType(.numberPad)
-                                        .multilineTextAlignment(.center)
-                                        .frame(width: 86, height: 36)
-                                        .background(Color("softBlue"))
-                                        .foregroundColor(.black)
-                                        .clipShape(TopLeftEdgeRectangle(radius: 8, corners: [.topLeft, .bottomRight]))
+                            // Drops input field (plus/minus + textfield)
+                            HStack(spacing: 0) {
+                                // minus button (−1)
+                                Button(action: {
+                                    let n = Int(selectedMiddleDropsText.trimmingCharacters(in: .whitespacesAndNewlines)) ?? selectedMiddleDrops
+                                    selectedMiddleDropsText = String(max(1, n - 1))
+                                }) {
+                                    Image(systemName: "minus")
+                                        .font(.system(size: 16))
+                                        .frame(width: 44, height: 44)
+                                        .contentShape(Rectangle())
                                 }
+                                .buttonStyle(.plain)
 
-                                Text("drops")
+                                TextField("Drops", text: $selectedMiddleDropsText)
                                     .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 140, height: 44)
+                                    .background(Color.white)
+                                    .foregroundColor(.black)
+                                    .opacity(0.89)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+                                    .accessibilityLabel("Drops to add")
+                                    .focused($isMiddleDropsFocused)
+                                    .toolbar {
+                                        ToolbarItemGroup(placement: .keyboard) {
+                                            Spacer()
+                                            Button("Done") { isMiddleDropsFocused = false }
+                                        }
+                                    }
+
+                                // plus button (+5)
+                                Button(action: {
+                                    let n = Int(selectedMiddleDropsText.trimmingCharacters(in: .whitespacesAndNewlines)) ?? selectedMiddleDrops
+                                    selectedMiddleDropsText = String(min(200, n + 5))
+                                }) {
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 16))
+                                        .frame(width: 44, height: 44)
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
                             }
+                            .padding(.horizontal, 10)
+                            .frame(width: 251, height: 44)
+                            .foregroundColor(.black)
 
                             // Action buttons (twin beveled buttons)
                             HStack(spacing: 12) {
@@ -1654,7 +1678,7 @@ struct MiddleNoteStruct: View {
                     VStack {
                     HStack {
                         ScrollView {
-                            ForEach(essentialOilNames, id: \.self) { oil in
+                            ForEach(middleNoteEssentialOilNames, id: \.self) { oil in
                                 HStack(spacing: 0) {
                                     Rectangle()
                                         .fill(Color(.black))
@@ -1999,6 +2023,8 @@ struct MiddleNoteStruct: View {
     }
 
 }
+
+
 struct BaseNoteStruct: View {
     
     @ObservedObject var variables = Oils.shared
@@ -2018,6 +2044,7 @@ struct BaseNoteStruct: View {
     @State private var pendingBaseOil: String? = nil
     @State private var selectedBaseDrops: Int = 1
     @State private var selectedBaseDropsText: String = "1"
+    @FocusState private var isBaseDropsFocused: Bool
     
     private func quickAddBase(_ oil: String, drops: String = "1") {
         variables.baseNoteOilName = oil
@@ -2029,26 +2056,25 @@ struct BaseNoteStruct: View {
 
 
     
-    let essentialOilNames = [
+    // BASE — most grounding → deepest/darkest
+    let baseNoteEssentialOilNames = [
+        "Cedarwood (Atlas)",
         "Amyris",
-        "Buddha Wood",
-        "Cedarwood Atlas",
-        "Cedarwood Himalayan",
-        "Cedarwood Texas",
-        "Cedarwood Virginian",
-        "Coffee",
-        "Copaiba Oleoresin",
-        "Frankincense Carteri",
-        "Frankincense Frereana",
-        "Frankincense Serrata",
-        "Myrrh",
+        "Sandalwood",
+        "Frankincense",
+        "Copaiba Balsam",
+        "Ambrette Seed",
         "Patchouli",
+        "Vetiver",
+        "Myrrh",
+        "Guaiacwood",
+        "Benzoin",
+        "Vanilla (Absolute)",
+        "Tonka Bean (Absolute)",
+        "Labdanum",
         "Peru Balsam",
-        "Sandalwood Australian",
-        "Sandalwood Indian",
-        "Turmeric",
-        "Vanilla",
-        "Vetiver"
+        "Opoponax (Sweet Myrrh)",
+        "Oakmoss"
     ]
     
     var body: some View {
@@ -2133,29 +2159,53 @@ struct BaseNoteStruct: View {
                                     .font(.custom("BeVietnamPro-Bold", size: 18))
                             }
 
-                            // Drops input field (mini beveled plate)
-                            HStack(spacing: 8) {
-                                Text("Drops:")
-                                    .font(.custom("BeVietnamPro-Light", size: 17))
-
-                                ZStack {
-                                    Rectangle()
-                                        .foregroundColor(.black)
-                                        .frame(width: 90, height: 40)
-                                        .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
-
-                                    TextField("e.g. 12", text: $selectedBaseDropsText)
-                                        .keyboardType(.numberPad)
-                                        .multilineTextAlignment(.center)
-                                        .frame(width: 86, height: 36)
-                                        .background(Color("softBlue"))
-                                        .foregroundColor(.black)
-                                        .clipShape(TopLeftEdgeRectangle(radius: 8, corners: [.topLeft, .bottomRight]))
+                            // Drops input field (plus/minus + textfield)
+                            HStack(spacing: 0) {
+                                // minus button (−1)
+                                Button(action: {
+                                    let n = Int(selectedBaseDropsText.trimmingCharacters(in: .whitespacesAndNewlines)) ?? selectedBaseDrops
+                                    selectedBaseDropsText = String(max(1, n - 1))
+                                }) {
+                                    Image(systemName: "minus")
+                                        .font(.system(size: 16))
+                                        .frame(width: 44, height: 44)
+                                        .contentShape(Rectangle())
                                 }
+                                .buttonStyle(.plain)
 
-                                Text("drops")
+                                TextField("Drops", text: $selectedBaseDropsText)
                                     .font(.custom("BeVietnamPro-Light", size: 16))
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 140, height: 44)
+                                    .background(Color.white)
+                                    .foregroundColor(.black)
+                                    .opacity(0.89)
+                                    .clipShape(TopLeftEdgeRectangle(radius: 10, corners: [.topLeft, .bottomRight]))
+                                    .accessibilityLabel("Drops to add")
+                                    .focused($isBaseDropsFocused)
+                                    .toolbar {
+                                        ToolbarItemGroup(placement: .keyboard) {
+                                            Spacer()
+                                            Button("Done") { isBaseDropsFocused = false }
+                                        }
+                                    }
+
+                                // plus button (+5)
+                                Button(action: {
+                                    let n = Int(selectedBaseDropsText.trimmingCharacters(in: .whitespacesAndNewlines)) ?? selectedBaseDrops
+                                    selectedBaseDropsText = String(min(200, n + 5))
+                                }) {
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 16))
+                                        .frame(width: 44, height: 44)
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
                             }
+                            .padding(.horizontal, 10)
+                            .frame(width: 251, height: 44)
+                            .foregroundColor(.black)
 
                             // Action buttons (twin beveled buttons)
                             HStack(spacing: 12) {
@@ -2225,7 +2275,7 @@ struct BaseNoteStruct: View {
                     VStack {
                     HStack {
                         ScrollView {
-                            ForEach(essentialOilNames, id: \.self) { oil in
+                            ForEach(baseNoteEssentialOilNames, id: \.self) { oil in
                                 HStack(spacing: 0) {
                                     Rectangle()
                                         .fill(Color(.black))
